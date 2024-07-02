@@ -1,0 +1,39 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: ProductServer
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${PRE_ORDER_DATABASE_URL}
+    username: ${PRE_ORDER_DATABASE_USERNAME}
+    password: ${PRE_ORDER_DATABASE_PASSWORD}
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MySQLDialect
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      show-sql: true
+      properties:
+        hibernate.format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+management:
+  endpoint:
+    metrics:
+      enabled: true  # endpoint를 활성화한다.
+    prometheus:
+      enabled: true
+
+  endpoints:  # Actuator가 제공하는 endpoint를 열어준다.
+    web:
+      exposure:
+        include: "*"
+#        include: health, info, metrics, prometheus
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
